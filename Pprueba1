@@ -1,0 +1,130 @@
+from Tkinter import*
+import serial
+import time
+import sys
+
+cuadro=Tk()
+
+global a
+global b
+global c
+global r
+r=0
+#COMUNICACION SERIAL DE PIC CON LA CUMPU
+ser= serial.Serial(port='COM10',baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE,bytesize=serial.EIGHTBITS, timeout=0)
+#Funcion Grabar
+def recibir1():
+    ser.flushInput()
+    ser.flushOutput()
+    time.sleep(.2)
+    numero1= ser.read()
+    try:
+        numerox=ord(numero1)
+        print numerox
+        a=open("valores1.txt" , "w")
+        a.write(numerox)
+    except:
+        global r
+        a.write(r)
+    
+def recibir2():
+    b=open("valores2.txt", "w")
+    b.write(valores2)
+
+def recibir3():
+    c=open("valores3.txt", "w")
+    c.write(valores3)
+
+#Funcion Reproducir
+def enviar1():
+    a= open("valores1.txt" , "r")
+    contenido1= a.read()
+    print contenido1
+
+def enviar2():
+    b= open("valores2.txt", "r")
+    contenido2= b.read()
+    print contenido2
+
+def enviar3():
+    c= open("valores3.txt", "r")
+    contenido3= c.read()
+    print contenido3
+    
+#Funcion Detener
+def stop1():
+    global a
+    a.close()
+
+def stop2():
+    global b
+    b.close()
+
+def stop3():
+    global c
+    c.close
+    
+#valores1= str(1)
+#valores2= str(2)
+#valores3= str(3)
+
+#Condiciones Iniciales
+cuadro.title("Proyecto Final")
+cuadro.iconbitmap("pic.ico")
+cuadro.resizable(False,False)
+cuadro.geometry("800x650")
+cuadro.config(bg="brown")
+miFrame=Frame(cuadro,width=500, height=500)
+miFrame.pack()
+#Datos
+nombre1= Label(cuadro, text="Alex Daniel Maas Esquivel",font=("Times New Roman",12))
+nombre1.place(x=160,y=400)
+carnet1= Label(cuadro, text="#17146",font=("Times New Roman",12))
+carnet1.place(x=160,y=420)
+nombre2= Label(cuadro, text="Nancy Mazariegos", font=("Times New Roman",12))
+nombre2.place(x=160, y=440)
+carnet2= Label(cuadro, text="#17227", font=("Times New Roman",12))
+carnet2.place(x=160, y=460)
+#Titulo 
+titulo=Label(miFrame, text="Proyecto Final" ,font=("Times New Roman",22))
+titulo.place(x=180,y=20)
+#Etiquetas
+etiqueta1=Label(miFrame, text="Rutina 1", font=("Times New Roman",15))
+etiqueta1.place(x=80, y= 120)
+etiqueta2=Label(miFrame, text="Rutina 2", font=("Times New Roman",15))
+etiqueta2.place(x=80, y= 200)
+etiqueta2=Label(miFrame, text="Rutina 3", font=("Times New Roman",15))
+etiqueta2.place(x=80, y= 280)
+#Grabar
+grabar1=Button(miFrame, text="Grabar", command= recibir1)
+grabar1.pack()
+grabar1.place(x=220 ,y=120)
+grabar2=Button(miFrame, text="Grabar", command= recibir2 )
+grabar2.pack()
+grabar2.place(x=220 ,y=200)
+grabar3=Button(miFrame, text="Grabar", command= recibir3 )
+grabar3.pack()
+grabar3.place(x=220 ,y=280)
+#Reproducir
+reproducir1=Button(miFrame, text="Reproducir",command= enviar1 )
+reproducir1.pack()
+reproducir1.place(x=300, y=120)
+reproducir2=Button(miFrame ,text= "Reproducir",command=enviar2)
+reproducir2.pack()
+reproducir2.place(x=300, y=200)
+reproducir3=Button(miFrame ,text= "Reproducir",command=enviar3)
+reproducir3.pack()
+reproducir3.place(x=300, y=280)
+#Detener
+detener1=Button(miFrame, text ="Detener", command=stop1)
+detener1.pack()
+detener1.place(x=400, y=120)
+detener2=Button(miFrame, text ="Detener", command=stop2)
+detener2.pack()
+detener2.place(x=400, y=200)
+detener3=Button(miFrame, text ="Detener", command=stop3)
+detener3.pack()
+detener3.place(x=400, y=280)
+
+#cuadro.update()
+cuadro.mainloop()
